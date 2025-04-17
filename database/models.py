@@ -15,6 +15,7 @@ class User(Base):
     birthday = Column(String, nullable=True)
     password = Column(String)
     reg_date = Column(DateTime, default=datetime.now(tashkent_timezone))
+    post_fk = relationship("Post", back_populates="users_fk")
 class Post(Base):
     __tablename__ = 'posts'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -23,7 +24,8 @@ class Post(Base):
     post_date = Column(DateTime, default=datetime.now(tashkent_timezone))
     hashtags = Column(String, ForeignKey("hashtags.id"))
     hashtags_fk = relationship("Hashtag", lazy="subquery")
-    users_fk = relationship(User, lazy="subquery")
+    users_fk = relationship(User, lazy="subquery", back_populates="post_fk",
+                            cascade="all, delete", passive_deletes=True)
 class Hashtag(Base):
     __tablename__ = "hashtags"
     id = Column(Integer, primary_key=True, autoincrement=True)
