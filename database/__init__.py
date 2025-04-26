@@ -5,7 +5,6 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
 localSession = sessionmaker(bind=engine)
 Base = declarative_base()
 
-engine = create_engine("sqlite:///your_database.db", echo=True)
 # включение каскадов
 @event.listens_for(engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
